@@ -2,6 +2,7 @@ package wax.wax.Infraestructura.output.persistence.entidades;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -55,5 +56,10 @@ public class VisitanteEntidad {
     @jakarta.validation.constraints.Size(max = 100)
     @Column(name = "estado", length = 100)
     private String estado;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fk_identificacion", nullable = false)
+    private usuarioresidenteEntidad fkIdentificacion;
 
 }

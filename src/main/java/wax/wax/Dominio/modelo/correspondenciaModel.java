@@ -13,6 +13,6 @@ public class correspondenciaModel {
     private String nomResidente;
     private String destino;
     private String empresa;
-    private torreModel torre;
-    private aptoModel apto;
+    private torreModel fktorre;
+    private aptoModel fkapto;
 }

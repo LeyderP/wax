@@ -1,6 +1,5 @@
 package wax.wax.Dominio.modelo;
 
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.LinkedHashSet;
@@ -11,7 +10,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "zonas_comunes")
 public class zonacomunModel {
 
 

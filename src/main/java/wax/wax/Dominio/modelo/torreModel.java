@@ -1,8 +1,16 @@
 package wax.wax.Dominio.modelo;
+import jakarta.persistence.Entity;
+import lombok.*;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-
+@Getter
+@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class torreModel {
     private Integer id;
 

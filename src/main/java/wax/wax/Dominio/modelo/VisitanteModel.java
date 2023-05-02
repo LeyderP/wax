@@ -32,5 +32,5 @@ public class VisitanteModel {
 
     private String estado;
 
-
+    private usuarioresidenteModel fkIdentificacion;
 }

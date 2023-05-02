@@ -16,13 +16,14 @@ import java.util.Set;
 @Builder
 @Table(name = "usuarios_residentes")
 public class usuarioresidenteEntidad {
+
     @Id
-    @Column(name = "pk_usr", nullable = false)
+    @Column(name = "pk_identificacion", nullable = false)
     private Integer id;
 
     @jakarta.validation.constraints.NotNull
-    @Column(name = "identificacion", nullable = false)
-    private Integer identificacion;
+    @Column(name = "id_usr", nullable = false)
+    private Integer idUsr;
 
     @jakarta.validation.constraints.Size(max = 100)
     @jakarta.validation.constraints.NotNull
@@ -41,7 +42,7 @@ public class usuarioresidenteEntidad {
 
     @jakarta.validation.constraints.NotNull
     @Column(name = "numero_contacto", nullable = false)
-    private Integer numeroContacto;
+    private Long numeroContacto;
 
     @jakarta.validation.constraints.Size(max = 255)
     @jakarta.validation.constraints.NotNull
@@ -63,7 +64,7 @@ public class usuarioresidenteEntidad {
     @JoinColumn(name = "fk_tusr", nullable = false)
     private tipousuarioEntidad fkTusr;
 
-    @OneToMany(mappedBy = "identificacion")
+    @OneToMany(mappedBy = "fkidentificacion")
     private Set<reservazonaEntidad> reservaZonas = new LinkedHashSet<>();
 
 }

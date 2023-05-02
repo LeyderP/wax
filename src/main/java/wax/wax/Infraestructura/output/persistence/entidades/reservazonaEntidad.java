@@ -20,11 +20,6 @@ public class reservazonaEntidad {
 
     @jakarta.validation.constraints.NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "identificacion", nullable = false)
-    private usuarioresidenteEntidad identificacion;
-
-    @jakarta.validation.constraints.NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_tr", nullable = false)
     private torreEntidad fkTr;
 
@@ -40,5 +35,10 @@ public class reservazonaEntidad {
     @jakarta.validation.constraints.NotNull
     @Column(name = "tiempo_reserva", nullable = false)
     private Integer tiempoReserva;
+
+    @jakarta.validation.constraints.NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fk_identificacion", nullable = false)
+    private usuarioresidenteEntidad fkidentificacion;
 
 }

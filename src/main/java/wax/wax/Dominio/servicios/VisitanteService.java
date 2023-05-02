@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import wax.wax.Dominio.excepciones.FechaInvalida;
-import wax.wax.Dominio.excepciones.VisitAlreadyExistsException;
-import wax.wax.Dominio.excepciones.VisitatableNotFoundException;
+import wax.wax.Dominio.excepciones.VisitanteExistenteException;
+import wax.wax.Dominio.excepciones.VisitatableNoEncontradoException;
 
 import wax.wax.Infraestructura.output.persistence.entidades.VisitanteEntidad;
 import wax.wax.Infraestructura.output.persistence.repositorio.VisitanteRepositorio;
@@ -28,7 +29,7 @@ public class VisitanteService {
 
     public VisitanteEntidad findById(Integer id) {
         return visitanteRepositorio.findById(Long.valueOf(id))
-                .orElseThrow(() -> new VisitatableNotFoundException("Visitatable not found with id " + id));
+                .orElseThrow(() -> new VisitatableNoEncontradoException("Visitante no encontrado con id " + id));
     }
 
 
@@ -37,21 +38,25 @@ public class VisitanteService {
 //                .orElseThrow(() -> new RuntimeException("Visitatable not found"));
 //    }
 
-    public VisitanteEntidad create(VisitanteEntidad visitatable) {
-        LocalDate currentDate = LocalDate.now();
-        if (visitatable.getFecha().isBefore(currentDate)) {
-            throw new FechaInvalida("La fecha no puede ser menor que la fecha actual");
+    public VisitanteEntidad create(VisitanteEntidad visitante) {
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate fecha = visitante.getFecha();
+
+        if (fecha.isBefore(fechaActual)) {
+            throw new FechaInvalida("No se puede registrar un visitante en una fecha anterior a la fecha actual");
         }
-        if (visitanteRepositorio.findById(Long.valueOf(String.valueOf(visitatable.getIdentificacion()))) != null)  {
-            throw new VisitAlreadyExistsException("Ya existe una visita registrada con esta identificación");
+
+        // Verificar si ya existe un visitante registrado para la misma fecha y cédula
+        Optional<VisitanteEntidad> visitanteExistente = visitanteRepositorio.findByIdentificacionAndFecha(visitante.getIdentificacion(), fecha);
+        if (visitanteExistente.isPresent()) {
+            throw new VisitanteExistenteException("Ya existe un visitante registrado con la misma cédula para la fecha dada");
         }
-        return visitanteRepositorio.save(visitatable);
+
+        // Establecer el estado como "en visita"
+        visitante.setEstado("en visita");
+
+        return visitanteRepositorio.save(visitante);
     }
-
-
-//    public Visitatable create(Visitatable visitatable) {
-//        return visitatableRepository.save(visitatable);
-//    }
 
     public VisitanteEntidad actualizarVisitante(Integer id, VisitanteEntidad visitante) {
         Optional<VisitanteEntidad> visitanteExistente = visitanteRepositorio.findById(Long.valueOf(id));
