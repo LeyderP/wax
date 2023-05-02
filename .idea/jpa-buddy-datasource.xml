@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpbDataSourceConfig">
+    <data-sources>
+      <data-source id="cb6e90b1-47ef-4252-acf3-82055800bd95" name="wax" url="jdbc:postgresql://localhost/wax" driverClass="org.postgresql.Driver" />
+    </data-sources>
+  </component>
+</project>
